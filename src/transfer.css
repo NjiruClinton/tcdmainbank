@@ -1,0 +1,18 @@
+.transfers{
+    align-items: center;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+.from span{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.amount{
+    margin-top: 50px;
+}
+
+.trans{
+    margin-top: 50px;
+}
