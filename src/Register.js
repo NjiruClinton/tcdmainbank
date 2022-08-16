@@ -35,7 +35,7 @@ function Register() {
     e.preventDefault();
     addDoc(collection(db, "users" ), {
       email: email,
-      amount: 10000,
+      amount: 0,
       accountNumber: accountNumber,
     });
   };

@@ -8,49 +8,52 @@ import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 200 },
+  { field: 'id', headerName: 'ID', width: 90 },
   {
     field: 'amountTransacted',
     headerName: 'Amount',
     width: 150,
-    editable: true,
+    editable: false,
   },
   
   {
     field: 'fromEmail',
     headerName: 'From Email',
     width: 200,
-    editable: true,
+    editable: false,
   },
   {
     field: 'fromAccountNumber',
     headerName: 'From',
     width: 200,
-    editable: true,
+    editable: false,
   },
 
   {
     field: 'toEmail',
     headerName: 'To Email',
     width: 200,
-    editable: true,
+    editable: false,
   },
 
   {
     field: 'toAccountNumber',
     headerName: 'To',
     width: 200,
-    editable: true,
+    editable: false,
   },
   {
     field: 'date',
     headerName: 'Date',
     type: 'date',
     width: 200,
-    editable: true,
+    editable: false,
   },
 
 ];
+
+
+
 
 
 
@@ -139,6 +142,15 @@ function Transfer() {
         }
         transaction.update(userRef, {amount: newAmount})
         submit(e)
+        addDoc(collection(db, "transactions" ), {
+          amountTransacted: amount,
+          fromAccountNumber: users.find(user => user.email === currentUser?.email)?.accountNumber,
+          toAccountNumber: accountNumber,
+          fromEmail: currentUser?.email,
+          toEmail: email,
+          // date and time
+          date: new Date().toLocaleString(),
+        });
         return newAmount
       }
       )
@@ -156,41 +168,9 @@ function Transfer() {
       setError('User not found' && <p style={{color: "red"}}>User not found</p>)
     }
 
-    addDoc(collection(db, "transactions" ), {
-      amountTransacted: amount,
-      fromAccountNumber: users.find(user => user.email === currentUser?.email)?.accountNumber,
-      toAccountNumber: accountNumber,
-      fromEmail: currentUser?.email,
-      toEmail: email,
-      date: new Date()
-    });
+    
 
     
-      // make the rows array returnable
-      /*
-      const rows = users.map((user) => {
-        return {
-          id: user.id,
-          amount: user.amount,
-          toEmail: user.email,
-          fromEmail: currentUser?.email,
-          fromAccountNumber: users.find(user => user.email === currentUser?.email)?.accountNumber,
-          toAccountNumber: user.accountNumber,
-        }
-      }
-      )
-      console.log(rows)
-      
-      const rows = [{
-        amountTransacted: amount,
-        fromAccountNumber: users.find(user => user.email === currentUser?.email)?.accountNumber,
-        toAccountNumber: accountNumber,
-        fromEmail: currentUser?.email,
-        toEmail: email,
-        date: new Date()
-        }
-      ]
-      */
   }
 
   // rows data from the transaction collection in the database
@@ -204,6 +184,8 @@ function Transfer() {
     setRows(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id})))
     ),
     )
+    // also display rows that row.toEmail === currentUser?.email
+    const rowsDisplay2 = rows.filter(row => row.toEmail === currentUser?.email)
     
 
 
@@ -231,7 +213,7 @@ function Transfer() {
                     placeholder="Enter account number"
                     required
                     value={accountNumber}
-                    onChange={(e) => setAccountNumber(e.target.value)} />
+                    onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ''))} />
                   </label>
                   <label>
                     Amount:
@@ -250,7 +232,7 @@ function Transfer() {
                   <h1>Transactions</h1>
                   <Box sx={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={rowsDisplay}
+        rows={[...rowsDisplay, ...rowsDisplay2]}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}

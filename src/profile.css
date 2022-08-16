@@ -1,16 +1,10 @@
 .profile{
-  width: 90%;
-  max-width: 400px;
-  border: 1px solid #dcdcdc;
-  padding: 20px;
-  text-align: center;
-  justify-content: space-between;
-}
-.center{
-  
+font-size: 1.2em;
 }
 
-
+.profile p{
+  padding: 10px;
+}
 
 .profile > span{
   color: blue;

@@ -22,7 +22,7 @@ import ListItemText from '@mui/material/ListItemText';
 import BusinessIcon from '@mui/icons-material/Business';
 import LoginIcon from '@mui/icons-material/Login';
 import CallIcon from '@mui/icons-material/Call';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 
 const drawerWidth = 240;
 
@@ -138,12 +138,12 @@ return (
         </DrawerHeader>
         <Divider />
         <List>
-          {[<Link className="links" to="/">Home</Link>, <Link className="links" to="/contactus">Contact Us</Link>, <Link className="links" to="/login">Login</Link>, <Link className="links" to="/register">Register</Link>, <Link className="links" to="/admin"></Link>].map((text, index) => (
+          {[<Link className="links" to="/">Home</Link>, <Link className="links" to="/contactus">Contact Us</Link>, <Link className="links" to="/login">Login</Link>, <Link className="links" to="/register">Register</Link>].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
 					{
-						index === 0 ? <BusinessIcon /> : index === 1 ? <CallIcon /> : index === 2 ? <LoginIcon /> : <AdminPanelSettingsIcon />
+						index === 0 ? <BusinessIcon /> : index === 1 ? <CallIcon /> : index === 2 ? <LoginIcon /> : <HowToRegIcon />
 					}
                 </ListItemIcon>
                 <ListItemText primary={text} />
@@ -159,17 +159,6 @@ return (
 		<h1> WELCOME TO <br/> TCD BANK</h1>
 		<p>Transfer money online</p>
 	</div>	
-	</div>
-	<div className="about">
-		<div className="left">
-		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore, voluptas asperiores. Ipsum necessitatibus magnam et dolorem! Qui ipsa impedit, laudantium doloribus illo quos fugit, dicta sit unde aperiam molestias harum tempore iure magni cum! Eaque autem, hic quidem omnis necessitatibus facilis labore odio, reprehenderit quae rerum quod nam repellat placeat!
-		</p>
-		</div>
-		<div className="right">
-		<p>
-			Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint blanditiis aspernatur sit consequatur, commodi magni, ullam inventore animi voluptas cumque veritatis libero cum. Nisi, officia est? Omnis ad molestias aperiam accusamus cumque iusto, pariatur eum placeat, atque quod possimus voluptates magnam fugiat impedit deleniti sit, praesentium cupiditate rerum quas veniam! Ab quidem enim libero aspernatur laborum tempore nemo unde harum.
-		</p>
-		</div>
 	</div>
 
 	</div>
