@@ -99,7 +99,8 @@ return (
 		  <div className="navigation">
 	<li><Link className="links1" to="/">Home</Link></li>
 	<li><Link className="links1" to="/contactus">Contact</Link></li>
-	<li><Link className="links1" to="/register">LogIn</Link></li>
+	<li><Link className="links1" to="/login">LogIn</Link></li>
+	<li><Link className="links1" to="/register">Register</Link></li>
 	<li><Link className="links1" to="/admin"></Link></li>
 </div>
 <div className="menu">
@@ -137,7 +138,7 @@ return (
         </DrawerHeader>
         <Divider />
         <List>
-          {[<Link className="links" to="/">Home</Link>, <Link className="links" to="/contactus">Contact Us</Link>, <Link className="links" to="/register">Login</Link>, <Link className="links" to="/admin"></Link>].map((text, index) => (
+          {[<Link className="links" to="/">Home</Link>, <Link className="links" to="/contactus">Contact Us</Link>, <Link className="links" to="/login">Login</Link>, <Link className="links" to="/register">Register</Link>, <Link className="links" to="/admin"></Link>].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>

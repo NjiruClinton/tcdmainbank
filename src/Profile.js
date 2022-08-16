@@ -25,8 +25,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-
-
+ 
 
 const drawerWidth = 240;
 
@@ -87,12 +86,6 @@ function Profile(props) {
   return (
       <div className='center'>
         <div className='dashboard'>
-          <h1>Dashboard</h1>
-          
-
-
-
-
           <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar
@@ -175,7 +168,6 @@ function Profile(props) {
         <Button variant="contained" href="/transfer"> Transfer</Button>
         </div>
         <div className='transactions'>
-          <h1>Transactions</h1>
           
         </div>
         <Typography paragraph>

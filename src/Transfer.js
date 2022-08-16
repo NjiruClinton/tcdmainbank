@@ -3,10 +3,58 @@ import './transfer.css'
 import {useAuthValue} from './AuthContext'
 import {db} from "./firebase";
 import { useState, useEffect } from "react";
-import { collection, onSnapshot, doc, runTransaction } from "firebase/firestore";
+import { collection, onSnapshot, doc, runTransaction, addDoc } from "firebase/firestore";
+import Box from '@mui/material/Box';
+import { DataGrid } from '@mui/x-data-grid';
+
+const columns = [
+  { field: 'id', headerName: 'ID', width: 200 },
+  {
+    field: 'amountTransacted',
+    headerName: 'Amount',
+    width: 150,
+    editable: true,
+  },
+  
+  {
+    field: 'fromEmail',
+    headerName: 'From Email',
+    width: 200,
+    editable: true,
+  },
+  {
+    field: 'fromAccountNumber',
+    headerName: 'From',
+    width: 200,
+    editable: true,
+  },
+
+  {
+    field: 'toEmail',
+    headerName: 'To Email',
+    width: 200,
+    editable: true,
+  },
+
+  {
+    field: 'toAccountNumber',
+    headerName: 'To',
+    width: 200,
+    editable: true,
+  },
+  {
+    field: 'date',
+    headerName: 'Date',
+    type: 'date',
+    width: 200,
+    editable: true,
+  },
+
+];
 
 
-function Transfertest() {
+
+function Transfer() {
   // create a transaction to update the amount of the user who is sending the money
   const [accountNumber, setAccountNumber] = useState('');
   const [amount, setAmount] = useState('')
@@ -20,7 +68,8 @@ function Transfertest() {
     setUsers(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id})))
     ),
     [])
-    
+       
+   
   const submit = async (e) => {
     e.preventDefault();
     const user = users.find(user => user.email === email)
@@ -50,6 +99,8 @@ function Transfertest() {
     else {
       setError('User not found')
     }
+
+   
     
   }
 
@@ -105,10 +156,61 @@ function Transfertest() {
       setError('User not found' && <p style={{color: "red"}}>User not found</p>)
     }
 
+    addDoc(collection(db, "transactions" ), {
+      amountTransacted: amount,
+      fromAccountNumber: users.find(user => user.email === currentUser?.email)?.accountNumber,
+      toAccountNumber: accountNumber,
+      fromEmail: currentUser?.email,
+      toEmail: email,
+      date: new Date()
+    });
 
+    
+      // make the rows array returnable
+      /*
+      const rows = users.map((user) => {
+        return {
+          id: user.id,
+          amount: user.amount,
+          toEmail: user.email,
+          fromEmail: currentUser?.email,
+          fromAccountNumber: users.find(user => user.email === currentUser?.email)?.accountNumber,
+          toAccountNumber: user.accountNumber,
+        }
+      }
+      )
+      console.log(rows)
+      
+      const rows = [{
+        amountTransacted: amount,
+        fromAccountNumber: users.find(user => user.email === currentUser?.email)?.accountNumber,
+        toAccountNumber: accountNumber,
+        fromEmail: currentUser?.email,
+        toEmail: email,
+        date: new Date()
+        }
+      ]
+      */
   }
 
+  // rows data from the transaction collection in the database
+  // if fromEmail === currentUser?.email, then the transaction data is displayed in the table
+  const docRef = collection(db, 'transactions')
+  const [rows, setRows] = useState([])
+  const rowsDisplay = rows.filter(row => row.fromEmail === currentUser?.email)
+  useEffect(
+    () =>
+    onSnapshot(docRef, (snapshot) =>
+    setRows(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id})))
+    ),
+    )
+    
+
+
+
   
+
+
   return (
           <div>
             <div className='center'>
@@ -135,16 +237,32 @@ function Transfertest() {
                     Amount:
                     <input type="text"
                     placeholder='Enter amount KSH'
-                    required value={amount}  
+                    required 
+                    value={amount}  
                     onChange={(e) => setAmount(e.target.value.replace(/\D/g, ''))} />
                   </label>
                   <input type="submit" value="Submit" />
                 </form>
                 <h1>{error}</h1>
                 </div>
+
+                <div className='transactions'>
+                  <h1>Transactions</h1>
+                  <Box sx={{ height: 400, width: '100%' }}>
+      <DataGrid
+        rows={rowsDisplay}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        checkboxSelection
+        disableSelectionOnClick
+        experimentalFeatures={{ newEditingApi: true }}
+      />
+    </Box>
+                </div>
                 </div>
     </div>
   );
 }
 
-export default Transfertest
+export default Transfer
