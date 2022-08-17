@@ -129,6 +129,11 @@ function Transfer() {
           setError('Insufficient funds'  && <p style={{color: "red"}}>Insufficient funds!</p>)
           return
         }
+        // if accountNumber entered is not the same as the receivers account number, then the transaction is not executed
+        if(accountNumber !== user.accountNumber) {
+          setError('Account number does not match' && <p style={{color: "red"}}>Account number does not match!</p>)
+          return
+        }
         // if receivers email is not found, then the transaction is not executed
         const receiver = users.find(user => user.email === email)
         if(!receiver) {

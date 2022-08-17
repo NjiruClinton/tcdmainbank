@@ -44,7 +44,7 @@ function Profile(props) {
       <Toolbar />
       <Divider />
       <List>
-        {[<Button variant="text" href="/transfer"> Transfer</Button>, 'Messages'].map((text, index) => (
+        {[<Button variant="text" href="/transfer"> Transfer</Button>, 'Messages', 'Deposit'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
