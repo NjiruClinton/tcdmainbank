@@ -88,6 +88,7 @@ function Transfer() {
         transaction.update(userRef, {amount: newAmount})
         return newAmount
       }
+
       )
       transaction.then(() => {
         setError('')
@@ -95,7 +96,7 @@ function Transfer() {
         setEmail('')
       }
       ).catch(() => {
-        setError('Insufficient funds')
+        setError('Check credentials' && <p style={{color: "red"}}>Check credentials</p>)
       }
       )
     }
@@ -103,8 +104,6 @@ function Transfer() {
       setError('User not found')
     }
 
-   
-    
   }
 
   
@@ -129,11 +128,6 @@ function Transfer() {
           setError('Insufficient funds'  && <p style={{color: "red"}}>Insufficient funds!</p>)
           return
         }
-        // if accountNumber entered is not the same as the receivers account number, then the transaction is not executed
-        if(accountNumber !== user.accountNumber) {
-          setError('Account number does not match' && <p style={{color: "red"}}>Account number does not match!</p>)
-          return
-        }
         // if receivers email is not found, then the transaction is not executed
         const receiver = users.find(user => user.email === email)
         if(!receiver) {
@@ -145,6 +139,14 @@ function Transfer() {
           setError('Cannot send to yourself'  && <p style={{color: "red"}}>Cannot send to yourself</p>)
           return
         }
+        // if the accountNumber entered by the user is not found in the database, then the transaction is not executed
+        const accountNumberEntered = accountNumber
+        const receiverAccountNumber = receiver.accountNumber
+        if(!accountNumberEntered.includes(receiverAccountNumber)) {
+          setError('Account number not found or does not match' && <p style={{color: "red"}}>Account number not found or does not match!</p>)
+          return
+        }
+
         transaction.update(userRef, {amount: newAmount})
         submit(e)
         addDoc(collection(db, "transactions" ), {
@@ -165,7 +167,7 @@ function Transfer() {
         setEmail('')
       }
       ).catch(() => {
-        setError('Insufficient funds'  && <p style={{color: "red"}}>Insufficient funds</p>)
+        setError('Check credentials'  && <p style={{color: "red"}}>Check credentials!</p>)
       }
       )
     }
@@ -218,6 +220,8 @@ function Transfer() {
                     placeholder="Enter account number"
                     required
                     value={accountNumber}
+                    maxLength="11"
+                    minLength="11"
                     onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ''))} />
                   </label>
                   <label>
