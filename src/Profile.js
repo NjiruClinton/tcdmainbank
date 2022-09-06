@@ -25,12 +25,101 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import LogoutIcon from '@mui/icons-material/Logout';
+import CloseIcon from '@mui/icons-material/Close';
+import Snackbar from '@mui/material/Snackbar';
+import { Link } from 'react-router-dom'
 
 
 const drawerWidth = 240;
 
 
 function Profile(props) {
+  const [open, setOpen] = React.useState(false);
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <Button color="secondary" size="small" onClick={handleClose}>
+        OK
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
+  const [open1, setOpen1] = React.useState(false);
+  const handleClick1 = () => {
+    setOpen1(true);
+  };
+
+  const handleClose1 = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen1(false);
+  };
+
+  const action1 = (
+    <React.Fragment>
+      <Button color="secondary" size="small" onClick={handleClose1}>
+        OK
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose1}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+  const [open2, setOpen2] = React.useState(false);
+  const handleClick2 = () => {
+    setOpen2(true);
+  };
+
+  const handleClose2 = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen2(false);
+  };
+
+  const action2 = (
+    <React.Fragment>
+      <Button color="secondary" size="small" onClick={handleClose2}>
+        OK
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose2}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -44,7 +133,29 @@ function Profile(props) {
       <Toolbar />
       <Divider />
       <List>
-        {[<Button variant="text" href="/transfer"> Transfer</Button>, 'Messages', 'Deposit'].map((text, index) => (
+        {[<Button variant="text" href="/transfer" style={{color: "black"}}> Transfer</Button>, 
+        <div>
+        <Button onClick={handleClick} style={{color: "black"}}>Deposit</Button>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          message="Cannot deposit at this time"
+          action={action}
+        />
+      </div>, 
+        <div>
+        
+        <Button onClick={handleClick1} style={{color: "black"}}>Messages</Button>
+        <Snackbar
+          open={open1}
+          autoHideDuration={6000}
+          onClose={handleClose1}
+          message="Cannot see messages at this time"
+          action={action1}
+        />
+      </div>
+      ].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -82,6 +193,13 @@ function Profile(props) {
     ),
    [])
    
+   // transfersonhold
+    const transfersOnHold = (email) => {
+      // alert "transfers for email are on hold"
+      handleClick2()
+    }
+
+
 
   return (
       <div className='center'>
@@ -155,7 +273,7 @@ function Profile(props) {
             <strong>Email verified: </strong>
             {`${currentUser?.emailVerified}`}
           </p>
-          <span onClick={() => signOut(auth)}>Sign Out</span>
+          
         </div>
         <div className='balance'>
           <h1>Balance</h1>
@@ -165,9 +283,12 @@ function Profile(props) {
           </h2>
         </div>
         <div className='transfer'>
-        <Button variant="contained" href="/transfer"> Transfer</Button>
+          <Link to='/transfer'>
+        <Button variant="contained" > Transfer</Button></Link>
+       
         </div>
-        <div className='transactions'>
+        <div className='signout'>
+          <span onClick={() => signOut(auth)}>Sign Out</span>
         </div>
       </Box>
     </Box>

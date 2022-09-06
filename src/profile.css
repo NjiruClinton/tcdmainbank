@@ -6,8 +6,15 @@ font-size: 1.2em;
   padding: 10px;
 }
 
-.profile > span{
+.signout > span{
   color: blue;
   cursor: pointer;
+}
+.signout{
+  margin-top: 20px;
+}
+.signout > span:hover{
+  text-decoration: underline;
+  transition: all 0.3s ease-in-out;
 }
 

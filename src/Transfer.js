@@ -201,7 +201,7 @@ function Transfer() {
 
 
   return (
-          <div>
+          
             <div className='center'>
               <div className='transfer'>
                 <h1>Transfer</h1>
@@ -252,7 +252,6 @@ function Transfer() {
     </Box>
                 </div>
                 </div>
-    </div>
   );
 }
 

@@ -15,6 +15,12 @@ import Home from './Components/Home';
 import Transfer from './Transfer';
 import Admin from './Components/Admin';
 import Adminmain from './Components/Adminmain';
+import Favicon from 'react-favicon'
+import fav1 from './favicon_io/FAV1.png'
+import fav2 from './favicon_io/FAV2.png'
+import fav3 from './favicon_io/FAV3.png'
+import fav4 from './favicon_io/FAV4.png'
+import fav5 from './favicon_io/FAV5.png'
 
 function App() {
 
@@ -29,6 +35,7 @@ function App() {
 
   return (
     <Router>
+      <Favicon url={[fav1, fav2, fav3, fav4, fav5]} />
       <AuthProvider value={{currentUser, timeActive, setTimeActive}}>
         <Routes>
           <Route exact path='/profile' element={
@@ -52,8 +59,6 @@ function App() {
         <Route path='/admin' element={<Admin/>} />
         <Route path="/adminmain" element={<Adminmain/>} />
         </Routes>
-        
-
       </AuthProvider>
   </Router>
   );

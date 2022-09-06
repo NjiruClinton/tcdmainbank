@@ -21,7 +21,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import BusinessIcon from '@mui/icons-material/Business';
 import LoginIcon from '@mui/icons-material/Login';
-import CallIcon from '@mui/icons-material/Call';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 
 const drawerWidth = 240;
@@ -97,8 +96,7 @@ return (
 		   <p style={{fontFamily: "'Source Sans Pro', sans-serif", fontSize: "30px"}}>TCD BANK</p>
           </Typography>
 		  <div className="navigation">
-	<li><Link className="links1" to="/">Home</Link></li>
-	<li><Link className="links1" to="/contactus">Contact</Link></li>
+	<li><Link className="links1" to="/" style={{color:"yellow"}}>Home</Link></li>
 	<li><Link className="links1" to="/login">LogIn</Link></li>
 	<li><Link className="links1" to="/register">Register</Link></li>
 	<li><Link className="links1" to="/admin"></Link></li>
@@ -138,12 +136,12 @@ return (
         </DrawerHeader>
         <Divider />
         <List>
-          {[<Link className="links" to="/">Home</Link>, <Link className="links" to="/contactus">Contact Us</Link>, <Link className="links" to="/login">Login</Link>, <Link className="links" to="/register">Register</Link>].map((text, index) => (
+          {[<Link className="links" to="/" style={{color: "yellow"}}>Home</Link>, <Link className="links" to="/login">Login</Link>, <Link className="links" to="/register">Register</Link>].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
 					{
-						index === 0 ? <BusinessIcon /> : index === 1 ? <CallIcon /> : index === 2 ? <LoginIcon /> : <HowToRegIcon />
+						index === 0 ? <BusinessIcon /> : index === 1 ? <LoginIcon /> : <HowToRegIcon />
 					}
                 </ListItemIcon>
                 <ListItemText primary={text} />

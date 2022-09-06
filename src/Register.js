@@ -4,7 +4,7 @@ import {auth} from './firebase'
 import {useNavigate, Link} from 'react-router-dom'
 import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 import {useAuthValue} from './AuthContext'
-import { collection, addDoc, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, doc, getDoc, query, where } from "firebase/firestore";
 import {db} from "./firebase";
 
 
@@ -12,18 +12,21 @@ import {db} from "./firebase";
 function Register() {
 
   const users = collection(db, "users");
-  const [accountNumber, setAccountNumber] = useState();
-  useEffect(() => {
-    onSnapshot(users, (snapshot) => {
-      const accountNumbers = snapshot.docs.map((doc) => doc.data().accountNumber);
-      if (accountNumbers.includes(accountNumber)) {
-        setAccountNumber(Math.floor(Math.random() * 100000000000));
-      }
-    }
-    );
-  }
-  , )
   
+
+  // create a random accountNumber with 11 digits and check if it already exists in the database
+  // if it does, generate a new one
+  function generateAccountNumber() {
+    let accountNumber = Math.floor(Math.random() * 1000000000000);
+    let accountNumberString = accountNumber.toString();
+    let accountNumberLength = accountNumberString.length;
+    let accountNumberArraySum = 0;
+    if (accountNumberLength === 11 && accountNumberArraySum % 11 === 0) {
+      return accountNumber;
+    } else {
+      return generateAccountNumber();
+    }
+  }
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -36,16 +39,12 @@ function Register() {
     addDoc(collection(db, "users" ), {
       email: email,
       amount: 0,
-      accountNumber: accountNumber,
+      accountNumber: generateAccountNumber(),
     });
+    console.log("details added");
   };
 
   
-
-  
-  
-
-
   const validatePassword = () => {
     let isValid = true
     if (password !== '' && confirmPassword !== ''){
@@ -69,9 +68,9 @@ function Register() {
             setTimeActive(true)
             navigate('/verify-email')
           }).catch((err) => alert(err.message))
+          submit(e)
         })
         .catch(err => setError(err.message))
-        submit(e)
     }
     setEmail('')
     setPassword('')

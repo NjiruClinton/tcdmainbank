@@ -25,8 +25,118 @@
   margin-bottom: 20px;
 }
 
+
 .auth form > input, button{
   height: 40px;
   font-size: 16px;
   padding: 0 10px;
+  color: black;
+  background-color: white;
+  border: 1px solid #dcdcdc;
+  border-radius: 5px;
 }
+
+
+.auth form button{
+  width: 100%;
+  height: 40px;
+  font-size: 16px;
+  padding: 0 10px;
+  color: white;
+  background-color: rgb(0, 0, 142);
+  border: 1px solid #dcdcdc;
+  border-radius: 19px;
+}
+.auth form button:hover{
+  background-color: rgb(5, 5, 235);
+  transition: all 0.3s ease-in-out;
+}
+
+.forgotp{
+  text-align: center;
+  margin-top: 10px;
+  cursor: pointer;
+  border: none;
+}
+.forgotp:hover{
+  text-decoration: underline;
+  transition: all 0.3s ease-in-out;
+  color: blue;
+}
+
+
+
+/* 
+.auth{
+  width: 90%;
+  max-width: 400px;
+  border: 1px solid #dcdcdc;
+  padding: 20px;
+  text-align: center;
+}
+.center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+
+}
+
+.auth form{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 0 auto 10px auto;
+}
+
+.auth__success{
+  padding: 10px 0;
+  background-color: hsl(147, 79%, 87%);
+  margin-bottom: 20px;
+}
+
+.auth__error{
+  padding: 10px 0;
+  background-color: hsl(0, 79%, 87%);
+  margin-bottom: 20px;
+}
+
+.auth form > input, button{
+  height: 40px;
+  font-size: 16px;
+  padding: 0 10px;
+  color: black;
+  background-color: white;
+  border: 1px solid #dcdcdc;
+  border-radius: 5px;
+}
+
+
+.auth form button{
+  width: 100%;
+  height: 40px;
+  font-size: 16px;
+  padding: 0 10px;
+  color: white;
+  background-color: rgb(0, 0, 142);
+  border: 1px solid #dcdcdc;
+  border-radius: 19px;
+}
+.auth form button:hover{
+  background-color: rgb(5, 5, 235);
+  transition: all 0.3s ease-in-out;
+}
+
+.forgotp{
+  text-align: center;
+  margin-top: 10px;
+  cursor: pointer;
+  border: none;
+}
+.forgotp:hover{
+  text-decoration: underline;
+  transition: all 0.3s ease-in-out;
+  color: blue;
+}
+
+*/

@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { Link } from 'react-router-dom'
 import './forms.css'
-import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
+import {signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail} from 'firebase/auth'
 import {auth} from './firebase'
 import {useNavigate} from 'react-router-dom'
 import {useAuthValue} from './AuthContext'
@@ -33,9 +33,17 @@ function Login(){
     })
     .catch(err => setError(err.message))
   }
+  const resetPassword = e => {
+    e.preventDefault()
+    sendPasswordResetEmail(auth, email)
+    .then(() => setError('Password reset email sent to ' + email))
+    .catch(err => setError(err.message))
+  }
+
 
   return(
     <div className='center'>
+      
       <div className='auth'>
         <h1>Log in</h1>
         {error && <div className='auth__error'>{error}</div>}
@@ -54,8 +62,9 @@ function Login(){
             placeholder='Enter your password'
             onChange={e => setPassword(e.target.value)}/>
 
-          <button type='submit'>Login</button>
+          <button type='submit'>Log In</button>
         </form>
+        <button onClick={resetPassword} className="forgotp">Forgot password?</button>
         <p>
           Don't have an account? 
           <Link to='/register'>Create one here</Link>
