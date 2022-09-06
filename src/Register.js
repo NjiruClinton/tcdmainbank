@@ -1,17 +1,16 @@
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import './forms.css'
 import {auth} from './firebase'
 import {useNavigate, Link} from 'react-router-dom'
 import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 import {useAuthValue} from './AuthContext'
-import { collection, addDoc, onSnapshot, doc, getDoc, query, where } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import {db} from "./firebase";
 
 
 
 function Register() {
 
-  const users = collection(db, "users");
   
 
   // create a random accountNumber with 11 digits and check if it already exists in the database
