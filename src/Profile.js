@@ -91,7 +91,7 @@ function Profile(props) {
       </IconButton>
     </React.Fragment>
   );
-  const [open2, setOpen2] = React.useState(false);
+  /*const [open2, setOpen2] = React.useState(false);
   const handleClick2 = () => {
     setOpen2(true);
   };
@@ -118,7 +118,7 @@ function Profile(props) {
         <CloseIcon fontSize="small" />
       </IconButton>
     </React.Fragment>
-  );
+  );*/
 
 
   const { window } = props;
@@ -193,11 +193,11 @@ function Profile(props) {
     ),
    [])
    
-   // transfersonhold
+   /* transfersonhold
     const transfersOnHold = (email) => {
       // alert "transfers for email are on hold"
       handleClick2()
-    }
+    }*/
 
 
 
