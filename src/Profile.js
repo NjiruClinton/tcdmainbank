@@ -277,7 +277,7 @@ function Profile(props) {
         </div>
         <div className='balance'>
           <h1>Balance</h1>
-          <h2>KSH {
+          <h2>$ {
             users.find(user => user.email === currentUser?.email)?.amount
             }
           </h2>

@@ -96,7 +96,7 @@ return (
 		   <p style={{fontFamily: "'Source Sans Pro', sans-serif", fontSize: "30px"}}>TCD BANK</p>
           </Typography>
 		  <div className="navigation">
-	<li><Link className="links1" to="/" style={{color:"yellow"}}>Home</Link></li>
+	<li><Link className="links1" to="/" style={{color:"#08ef40"}}>Home</Link></li>
 	<li><Link className="links1" to="/login">LogIn</Link></li>
 	<li><Link className="links1" to="/register">Register</Link></li>
 	<li><Link className="links1" to="/admin"></Link></li>
@@ -136,7 +136,7 @@ return (
         </DrawerHeader>
         <Divider />
         <List>
-          {[<Link className="links" to="/" style={{color: "yellow"}}>Home</Link>, <Link className="links" to="/login">Login</Link>, <Link className="links" to="/register">Register</Link>].map((text, index) => (
+          {[<Link className="links" to="/" style={{color: "#08ef40"}}>Home</Link>, <Link className="links" to="/login">Login</Link>, <Link className="links" to="/register">Register</Link>].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
