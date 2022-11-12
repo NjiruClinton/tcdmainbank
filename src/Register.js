@@ -59,7 +59,6 @@ function Register() {
     e.preventDefault()
     setError('')
     if(validatePassword()) {
-      // Create a new user with email and password using firebase
         createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
           sendEmailVerification(auth.currentUser)   
@@ -69,7 +68,21 @@ function Register() {
           }).catch((err) => alert(err.message))
           submit(e)
         })
-        .catch(err => setError(err.message))
+        .catch(err => {
+          switch(err.code){
+            case 'auth/email-already-in-use':
+              setError('Email already in use')
+              break
+            case 'auth/invalid-email':
+              setError('Invalid email')
+              break
+            case 'auth/weak-password':
+              setError('Password must be at least 6 characters')
+              break
+            default:
+              setError('Something went wrong')
+          }
+        })
     }
     setEmail('')
     setPassword('')

@@ -22,6 +22,8 @@ import ListItemText from '@mui/material/ListItemText';
 import BusinessIcon from '@mui/icons-material/Business';
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
+import Footer from "./Footer/Footer";
+import Homecontent from "./Homecontent/Homecontent";
 
 const drawerWidth = 240;
 
@@ -158,7 +160,8 @@ return (
 		<p>Transfer money online</p>
 	</div>	
 	</div>
-
+  <Homecontent />
+<Footer />
 	</div>
 );
 };

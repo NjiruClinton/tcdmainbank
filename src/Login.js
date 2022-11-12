@@ -27,11 +27,35 @@ function Login(){
           navigate('/verify-email')
         })
       .catch(err => alert(err.message))
-    }else{
+    }// if user doesnt exist, dont log in and send error message
+    else if(!auth.currentUser.email) {
+      setError('User does not exist')
+    }
+    else{
       navigate('/profile')
     }
     })
-    .catch(err => setError(err.message))
+    .catch(err => {
+      switch(err.code){
+        case 'auth/invalid-email':
+          setError('Invalid email')
+          break
+        case 'auth/user-disabled':
+          setError('User disabled')
+          break
+        case 'auth/user-not-found':
+          setEmail('')
+          setPassword('')
+          setError("Invalid Email or Password")
+          break
+        case 'auth/wrong-password':
+          setPassword('')
+          setError("Invalid Email or Password")
+          break
+        default:
+          setError('Something went wrong')
+      }
+    })
   }
   const resetPassword = e => {
     e.preventDefault()

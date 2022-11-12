@@ -91,7 +91,7 @@ function Profile(props) {
       </IconButton>
     </React.Fragment>
   );
-  /*const [open2, setOpen2] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
   const handleClick2 = () => {
     setOpen2(true);
   };
@@ -118,7 +118,7 @@ function Profile(props) {
         <CloseIcon fontSize="small" />
       </IconButton>
     </React.Fragment>
-  );*/
+  );
 
 
   const { window } = props;
@@ -138,7 +138,7 @@ function Profile(props) {
         <Button onClick={handleClick} style={{color: "black"}}>Deposit</Button>
         <Snackbar
           open={open}
-          autoHideDuration={6000}
+          autoHideDuration={600}
           onClose={handleClose}
           message="Cannot deposit at this time"
           action={action}
@@ -149,7 +149,7 @@ function Profile(props) {
         <Button onClick={handleClick1} style={{color: "black"}}>Messages</Button>
         <Snackbar
           open={open1}
-          autoHideDuration={6000}
+          autoHideDuration={600}
           onClose={handleClose1}
           message="Cannot see messages at this time"
           action={action1}
@@ -193,11 +193,11 @@ function Profile(props) {
     ),
    [])
    
-   /* transfersonhold
+   
     const transfersOnHold = (email) => {
       // alert "transfers for email are on hold"
       handleClick2()
-    }*/
+    }
 
 
 
@@ -283,8 +283,16 @@ function Profile(props) {
           </h2>
         </div>
         <div className='transfer'>
-          <Link to='/transfer'>
-        <Button variant="contained" > Transfer</Button></Link>
+          
+        <Button variant="contained" onClick={transfersOnHold} > Transfer</Button>
+        <Snackbar
+          open={open2}
+          autoHideDuration={600}
+          onClose={handleClose2}
+          message="Cannot transfer at this time"
+          action={action2}
+        />
+        {/*wrap transfer button with this link, import Link <Link to='/transfer'></Link> */}
        
         </div>
         <div className='signout'>
