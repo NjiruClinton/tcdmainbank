@@ -27,7 +27,6 @@ import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CloseIcon from '@mui/icons-material/Close';
 import Snackbar from '@mui/material/Snackbar';
-import { Link } from 'react-router-dom'
 
 
 const drawerWidth = 240;
