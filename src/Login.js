@@ -69,28 +69,28 @@ function Login(){
     <div className='center'>
       
       <div className='auth'>
-        <h1>Log in</h1>
+        <h1>Log in</h1><br />
         {error && <div className='auth__error'>{error}</div>}
         <form onSubmit={login} name='login_form'>
           <input 
             type='email' 
             value={email}
             required
-            placeholder="Enter your email"
+            placeholder="Email"
             onChange={e => setEmail(e.target.value)}/>
 
           <input 
             type='password'
             value={password}
             required
-            placeholder='Enter your password'
+            placeholder='Password'
             onChange={e => setPassword(e.target.value)}/>
 
-          <button type='submit'>Log In</button>
+          <button type='submit'>LOG IN</button>
         </form>
         <button onClick={resetPassword} className="forgotp">Forgot password?</button>
         <p>
-          Don't have an account? 
+          Don't have an account?{' '}
           <Link to='/register'>Create one here</Link>
         </p>
       </div>

@@ -93,7 +93,7 @@ function Register() {
   return (
     <div className='center'>
       <div className='auth'>
-        <h1>Register</h1>
+        <h1>Register</h1><br />
         {error && <div className='auth__error'>{error}</div>}
         <form onSubmit={register} name='registration_form'>
           <input 
@@ -120,7 +120,7 @@ function Register() {
           <button type='submit'>Register</button>
         </form>
         <span>
-          Already have an account?  
+          Already have an account? {' '} 
           <Link to='/login'>login</Link>
         </span>
       </div>
