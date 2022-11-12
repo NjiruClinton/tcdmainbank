@@ -95,7 +95,7 @@ return (
 	  
         <Toolbar>
           <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div" >
-		   <p style={{fontFamily: "'Source Sans Pro', sans-serif", fontSize: "30px"}}>TCD BANK</p>
+		   <p style={{fontFamily: "'Source Sans Pro', sans-serif", fontSize: "20px"}}>TRANS NATIONAL BANK</p>
           </Typography>
 		  <div className="navigation">
 	<li><Link className="links1" to="/" style={{color:"#08ef40"}}>Home</Link></li>
@@ -156,7 +156,7 @@ return (
       </Drawer>
     </Box>
 	<div className="heading">
-		<h1> WELCOME TO <br/> TCD BANK</h1>
+		<h1> WELCOME TO <br/> TRANS NATIONAL BANK</h1>
 		<p>Transfer money online</p>
 	</div>	
 	</div>
