@@ -202,7 +202,14 @@ function Profile(props) {
     ),
    [])
    
-   
+   // style just this pages body to have 100% height and overflow hidden  
+    // so that the drawer doesn't push the page down
+    useEffect(() => {
+      document.body.style.height = '100%'
+      document.body.style.overflow = 'hidden'
+    }, [])
+    
+  
 
   return (
     //   <div className='center' >
@@ -306,7 +313,7 @@ function Profile(props) {
     // </Box>
 
     //     </div>
-       <div className= "body">
+       <div className= "body1">
          <input type="checkbox" id="drawer-toggle" name="drawer-toggle"/>
    <label for="drawer-toggle" id="drawer-toggle-label"></label>
    <header>Dashboard</header>

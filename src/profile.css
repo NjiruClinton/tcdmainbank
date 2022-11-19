@@ -56,12 +56,8 @@ font-size: 1.2em;
   -webkit-text-size-adjust: none; 
   } 
   
-  /* Makes sure that everything is 100% height */ 
-  
-  html, .body { 
-  height: 100%; 
-  overflow: hidden; 
-  } 
+  /* Makes sure that everything is 100% height for just this page*/  
+ 
   
   /* gets the actual input out of the way; 
   we're going to style the label instead */ 
@@ -149,8 +145,6 @@ font-size: 1.2em;
     padding: 10px;
   }
   
-.dash-buttons{
-}
   /* checked styles (menu open state) */ 
   
   #drawer-toggle:checked ~ #drawer-toggle-label { 
