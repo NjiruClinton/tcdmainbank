@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import { collection, onSnapshot, doc, runTransaction, addDoc } from "firebase/firestore";
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
+import { Link } from 'react-router-dom';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -201,13 +203,13 @@ function Transfer() {
 
 
   return (
-          
+          <div className="content">
             <div className='center'>
               <div className='transfer'>
+                <Link to='/profile' className='back'> <KeyboardBackspaceIcon sx={{fontSize: "40px"}}/></Link>
                 <h1>Transfer</h1>
                 <form onSubmit={submit2}>
                   <label>
-                    Email:
                     <input type="email" 
                     placeholder="Enter receiver's email"
                     required  
@@ -215,7 +217,6 @@ function Transfer() {
                     onChange={(e) => setEmail(e.target.value)} />
                   </label>
                   <label>
-                    Account number:
                     <input type="text"
                     placeholder="Enter account number"
                     required
@@ -225,7 +226,6 @@ function Transfer() {
                     onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ''))} />
                   </label>
                   <label>
-                    Amount:
                     <input type="text"
                     placeholder='Enter amount KSH'
                     required 
@@ -238,9 +238,9 @@ function Transfer() {
                 </div>
 
                 <div className='transactions'>
-                  <h1>Transactions</h1>
+                  <h1>Transactions history</h1>
                   <Box sx={{ height: 400, width: '100%' }}>
-      <DataGrid
+      <DataGrid sx={{ color: 'white' }}
         rows={[...rowsDisplay, ...rowsDisplay2]}
         columns={columns}
         pageSize={5}
@@ -250,6 +250,7 @@ function Transfer() {
         experimentalFeatures={{ newEditingApi: true }}
       />
     </Box>
+                </div>
                 </div>
                 </div>
   );

@@ -1,13 +1,16 @@
+/* bbg.jpg as background image for the whole page */
+/*   background: url(./background3.jpg) no-repeat center center fixed;
+ */
 .center{
-    align-items: center;
-    margin-left: 50px;
-    margin-top: 50px;
-    margin-right: 50px;
+    background: url(./bbg.jpg) no-repeat center center fixed;
+    height: 100vh;
 }
+
 
 
 form{
     display: flex;
+    flex-direction: column;
 }
 label{
     margin-right: 10px;
@@ -16,24 +19,92 @@ input:focus{
     border: 1px solid #ccc;
   border-radius: 4px;
 }
+.back{
+  color: white;
+  
+}
+.back:hover{
+  color: #2f80ed;
+}
 
 input{
     margin-left: 5px;
-    border-radius: 4px;
+    border-radius: 0px;
     box-shadow: none;
     border: black 1px solid;
     padding: 10px;
+    width: 20%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
   }
   input[type=submit] {
+    width: 20%;
     background-color: #04AA6D;
     color: white;
     padding: 12px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 0px;
     cursor: pointer;
     float: right;
+    
+  background-color: #2f80ed;
+  color: white;
   }
 
     input[type=submit]:hover {
-        background-color: #45a049;
+      background-color: white;
+      color: #2f80ed;
     }
+/* .transfer form
+*/
+.transfer{
+  margin-left: 50px;
+    width: 90%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+    margin-top: 20px;
+}
+
+/* small screen */
+@media screen and (max-width: 600px){
+    .transfer{
+      margin-left: 0px;
+        width: 100%;
+        text-align: start;
+    }
+    form{
+        flex-direction: column;
+        position: relative;
+    }
+    label{
+        margin-right: 0;
+        margin-top: 5px;
+    }
+    input{
+        margin-left: 0;
+        margin-bottom: 5px;
+        margin-left: 5px;
+        
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+    }
+    input[type=submit]{
+      width: 50%;
+      text-align: center;
+      border-radius: 0px;
+    }
+}
