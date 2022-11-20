@@ -177,9 +177,6 @@ function Transfer() {
       setError('User not found' && <p style={{color: "red"}}>User not found</p>)
     }
 
-    
-
-    
   }
 
   // rows data from the transaction collection in the database
@@ -197,9 +194,25 @@ function Transfer() {
     const rowsDisplay2 = rows.filter(row => row.toEmail === currentUser?.email)
     
 
+const [message, setMessage] = useState('')
 
 
+
+const submit3 = (e) => {
+  if(1 == 20){
+    submit2(e)
+  }else{
+    const displayMessage = message
+    setMessage(displayMessage)
+    e.preventDefault()
+    setMessage('Transactions are currently on hold')
+    alert('Transactions are currently on hold')
+    console.log('Transactions are currently on hold')
+  }
   
+  
+}
+
 
 
   return (
@@ -208,7 +221,8 @@ function Transfer() {
               <div className='transfer'>
                 <Link to='/profile' className='back'> <KeyboardBackspaceIcon sx={{fontSize: "40px"}}/></Link>
                 <h1>Transfer</h1>
-                <form onSubmit={submit2}>
+                {/* submit2 instead of submit3 */}
+                <form onSubmit={submit3}>
                   <label>
                     <input type="email" 
                     placeholder="Enter receiver's email"
