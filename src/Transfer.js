@@ -195,9 +195,6 @@ function Transfer() {
     
 
 const [message, setMessage] = useState('')
-
-
-
 const submit3 = (e) => {
   if(1 == 20){
     submit2(e)
@@ -209,8 +206,6 @@ const submit3 = (e) => {
     alert('Transactions are currently on hold')
     console.log('Transactions are currently on hold')
   }
-  
-  
 }
 
 

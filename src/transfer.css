@@ -1,9 +1,15 @@
-/* bbg.jpg as background image for the whole page */
+/* sbbg.jpg as background image for the whole page */
 /*   background: url(./background3.jpg) no-repeat center center fixed;
  */
+ /* background image to fit whole screen */
 .center{
-    background: url(./bbg.jpg) no-repeat center center fixed;
-    
+  background: url(./sbbg.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  
+
 }
 
 
@@ -68,7 +74,6 @@ input{
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
-    margin-top: 20px;
 }
 
 /* small screen */
