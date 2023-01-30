@@ -27,7 +27,10 @@ function Register() {
     }
   }
 
+  const [fullName, setfullName] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [idNumber, setidNumber] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
@@ -39,6 +42,9 @@ function Register() {
       email: email,
       amount: 0,
       accountNumber: generateAccountNumber(),
+      fullName: fullName,
+      phone: phone,
+      idNumber: idNumber
     });
     console.log("details added");
   };
@@ -96,12 +102,33 @@ function Register() {
         <h1>Register</h1><br />
         {error && <div className='auth__error'>{error}</div>}
         <form onSubmit={register} name='registration_form'>
+          <input
+          type='text'
+          value={fullName}
+          placeholder="Enter full name"
+          required
+          onChange={e => setfullName(e.target.value)}/>
+
           <input 
             type='email' 
             value={email}
             placeholder="Enter your email"
             required
             onChange={e => setEmail(e.target.value)}/>
+
+          <input
+          type='text'
+          value={phone}
+          placeholder="Enter phone number"
+          required
+          onChange={e => setPhone(e.target.value)}/> 
+
+          <input 
+          type='text'
+          value= {idNumber}
+          placeholder= "Enter ID or passport number"
+          required
+          onChange={e => setidNumber(e.target.value)}/> 
 
           <input 
             type='password'

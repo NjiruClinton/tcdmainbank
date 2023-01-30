@@ -51,6 +51,12 @@ const columns = [
     width: 200,
     editable: false,
   },
+  {
+    field: 'status',
+    headerName: 'Status',
+    width: 200,
+    editable: false,
+  }
 
 ];
 
@@ -159,6 +165,7 @@ function Transfer() {
           toEmail: email,
           // date and time
           date: new Date().toLocaleString(),
+          status: "transaction on hold"
         });
         return newAmount
       }
@@ -217,7 +224,7 @@ const submit3 = (e) => {
                 <Link to='/profile' className='back'> <KeyboardBackspaceIcon sx={{fontSize: "40px"}}/></Link>
                 <h1>Transfer</h1>
                 {/* submit2 instead of submit3 */}
-                <form onSubmit={submit3}>
+                <form onSubmit={submit2}>
                   <label>
                     <input type="email" 
                     placeholder="Enter receiver's email"

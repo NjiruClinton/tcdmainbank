@@ -53,11 +53,11 @@ video{
     text-decoration: none;
 }
 .links:hover{
-    color: rgb(216, 206, 60);
+    opacity: .6;
     transition: all 0.5s ease-in-out;
 }
 .links1:hover{
-    color: rgb(216, 206, 60);
+    opacity: .6;
     transition: all 0.5s ease-in-out;
 }
 .navigation li{

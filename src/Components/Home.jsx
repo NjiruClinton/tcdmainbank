@@ -89,16 +89,16 @@ return (
 		<div className="overlay"></div>
 		<video src={videoBg} autoPlay loop muted></video>
 	<div className="navb">
-	<Box sx={{ display: 'flex' }}>
+	<Box sx={{ display: 'flex'}}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} sx={{backgroundColor: "#11273d" }}>
 	  
-        <Toolbar>
+        <Toolbar >
           <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div" >
 		   <p style={{fontFamily: "'Source Sans Pro', sans-serif", fontSize: "20px"}}>TRANS NATIONAL BANK</p>
           </Typography>
 		  <div className="navigation">
-	<li><Link className="links1" to="/" style={{color:"#08ef40"}}>Home</Link></li>
+	<li><Link className="links1" to="/" style={{color:"#c8d4e0"}}>Home</Link></li>
 	<li><Link className="links1" to="/login">LogIn</Link></li>
 	<li><Link className="links1" to="/register">Register</Link></li>
 	<li><Link className="links1" to="/admin"></Link></li>
