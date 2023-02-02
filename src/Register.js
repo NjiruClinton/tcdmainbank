@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useMemo } from 'react'
 import './forms.css'
 import {auth} from './firebase'
 import {useNavigate, Link} from 'react-router-dom'
@@ -6,10 +6,18 @@ import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/au
 import {useAuthValue} from './AuthContext'
 import { collection, addDoc } from "firebase/firestore";
 import {db} from "./firebase";
+import Select from 'react-select'
+import countryList from 'react-select-country-list'
 
 
 
 function Register() {
+  const [value, setValue] = useState('')
+  const options = useMemo(() => countryList().getData(), [])
+
+  const changeHandler = value => {
+    setValue(value)
+  }
 
   
 
@@ -44,7 +52,8 @@ function Register() {
       accountNumber: generateAccountNumber(),
       fullName: fullName,
       phone: phone,
-      idNumber: idNumber
+      idNumber: idNumber,
+      country: value.label,
     });
     console.log("details added");
   };
@@ -70,7 +79,8 @@ function Register() {
           sendEmailVerification(auth.currentUser)   
           .then(() => {
             setTimeActive(true)
-            navigate('/verify-email')
+             // black background for the ./verify-email page
+             navigate('/verify-email', {state: {backgroundColor: 'black', color: 'white'}})
           }).catch((err) => alert(err.message))
           submit(e)
         })
@@ -129,6 +139,35 @@ function Register() {
           placeholder= "Enter ID or passport number"
           required
           onChange={e => setidNumber(e.target.value)}/> 
+
+          <Select options={options} value={value} onChange={changeHandler}
+          placeholder="Select country"
+          styles={{
+            control: (base, state) => ({
+              ...base,
+              border: state.isFocused ? 0 : 0,
+              boxShadow: state.isFocused ? 0 : 0,
+              '&:hover': {
+                border: state.isFocused ? 0 : 0
+              }
+            }),
+            option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+              return {
+                ...styles,
+                backgroundColor: isSelected ? '#0f4c75' : isFocused ? '#0f4c75' : null,
+                color: isSelected ? '#fff' : isFocused ? '#fff' : null,
+              };
+            },
+            singleValue: (styles, { data }) => ({ ...styles, color: '#0f4c75' }),
+            multiValueRemove: (styles, { data }) => ({ ...styles, color: '#0f4c75' }),
+            menu: (styles) => ({ ...styles, backgroundColor: '#000' }),
+
+
+          
+          }}
+          
+          />
+          
 
           <input 
             type='password'

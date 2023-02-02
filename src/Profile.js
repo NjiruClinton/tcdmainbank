@@ -6,25 +6,15 @@ import { auth } from './firebase'
 import { Button } from '@mui/material'
 import { useEffect, useState } from 'react'
 import {db} from "./firebase";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, doc, runTransaction, addDoc } from "firebase/firestore";
 import PropTypes from 'prop-types';
-// import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-// import List from '@mui/material/List';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemButton from '@mui/material/ListItemButton';
-// import ListItemIcon from '@mui/material/ListItemIcon';
-// import ListItemText from '@mui/material/ListItemText';
-// import MailIcon from '@mui/icons-material/Mail';
-// import Toolbar from '@mui/material/Toolbar';
-// import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-// import LogoutIcon from '@mui/icons-material/Logout';
 import CloseIcon from '@mui/icons-material/Close';
 import Snackbar from '@mui/material/Snackbar';
 import { Link } from 'react-router-dom'
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
-// const drawerWidth = 240;
 
 
 function Profile(props) {
@@ -85,113 +75,15 @@ function Profile(props) {
       </IconButton>
     </React.Fragment>
   );
-   const [ setOpen2] = React.useState(false);
-  const handleClick2 = () => {
-    setOpen2(true);
-  };
+  
 
-  // const handleClose2 = (event, reason) => {
-  //   if (reason === 'clickaway') {
-  //     return;
-  //   }
+ 
+  // const transfersOnHold = (email) => {
+  //   // alert "transfers for email are on hold"
+  //   handleClick2()
+  // }
 
-  //   setOpen2(false);
-  // };
-
-  // const action2 = (
-  //   <React.Fragment>
-  //     <Button color="secondary" size="small" onClick={handleClose2}>
-  //       OK
-  //     </Button>
-  //     <IconButton
-  //       size="small"
-  //       aria-label="close"
-  //       color="inherit"
-  //       onClick={handleClose2}
-  //     >
-  //       <CloseIcon fontSize="small" />
-  //     </IconButton>
-  //   </React.Fragment>
-  // );
-
-
-  // const { window } = props;
-  // const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  // const handleDrawerToggle = () => {
-  //   setMobileOpen(!mobileOpen);
-  // };
-  const transfersOnHold = (email) => {
-    // alert "transfers for email are on hold"
-    handleClick2()
-  }
-
-  // const drawer = (
-  //   <div>
-  //     <Toolbar />
-  //     <Divider />
-  //     <List>
-  //       {[
-  //         <div>
-  //           {/* use Link to */}
-  //       <Button variant="text"  style={{color: "black"}} onClick={transfersOnHold} > Transfer</Button>
-  //       <Snackbar
-  //       open={open2}
-  //       autoHideDuration={600}
-  //       onClose={handleClose2}
-  //       message="Cannot transfer at this time"
-  //       action={action2}
-  //     />
-  //     </div>,
-  //       <div>
-  //       <Button onClick={handleClick} style={{color: "black"}}>Deposit</Button>
-  //       <Snackbar
-  //         open={open}
-  //         autoHideDuration={600}
-  //         onClose={handleClose}
-  //         message="Cannot deposit at this time"
-  //         action={action}
-  //       />
-  //     </div>, 
-  //       <div>
-        
-  //       <Button onClick={handleClick1} style={{color: "black"}}>Messages</Button>
-  //       <Snackbar
-  //         open={open1}
-  //         autoHideDuration={600}
-  //         onClose={handleClose1}
-  //         message="Cannot see messages at this time"
-  //         action={action1}
-  //       />
-  //     </div>
-  //     ].map((text, index) => (
-  //         <ListItem key={text} disablePadding>
-  //           <ListItemButton>
-  //             <ListItemIcon>
-  //               {index % 2 === 0 ? <CurrencyExchangeIcon /> : <MailIcon />}
-  //             </ListItemIcon>
-  //             <ListItemText primary={text} />
-  //           </ListItemButton>
-  //         </ListItem>
-  //       ))}
-  //     </List>
-  //     <Divider />
-  //     <List>
-  //       {[ <span onClick={() => signOut(auth)}>Sign Out</span>].map((text, index) => (
-  //         <ListItem key={text} disablePadding>
-  //           <ListItemButton>
-  //             <ListItemIcon>
-  //               {index % 2 === 0 ? <LogoutIcon /> : <LogoutIcon />}
-  //             </ListItemIcon>
-  //             <ListItemText primary={text} />
-  //           </ListItemButton>
-  //         </ListItem>
-  //       ))}
-  //     </List>
-  //   </div>
-  // );
-
-  // const container = window !== undefined ? () => window().document.body : undefined;
+  
   
   const {currentUser} = useAuthValue()
   const [users, setUsers] = useState([{email: 'Loading...', id: 'Initial'}])
@@ -202,133 +94,153 @@ function Profile(props) {
     ),
    [])
    
-   // style just this pages body to have 100% height and overflow hidden  
-    // so that the drawer doesn't push the page down
+
     useEffect(() => {
       document.body.style.height = '100%'
       document.body.style.overflow = 'hidden'
     }, [])
-    
+
+    const [accountNumber, setAccountNumber] = useState('');
+  const [amount, setAmount] = useState('')
+  const [email, setEmail] = useState('')
+  const [error, setError] = useState('')
+  useEffect(
+    () =>
+    onSnapshot(collection(db, 'users'), (snapshot) =>
+    setUsers(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id})))
+    ),
+    [])
+       
+   
+  const submit = async (e) => {
+    e.preventDefault();
+    const user = users.find(user => user.email === email)
+    console.log(user)
+    if (user) {
+      const transaction = runTransaction(db, async (transaction) => {
+        const userRef = doc(db, `users/${user.id}`)
+        console.log(userRef)
+        const userSnapshot = await transaction.get(userRef)
+        console.log(userSnapshot)
+        const newAmount = parseInt(userSnapshot.data().amount) + parseInt(amount) 
+        console.log(newAmount)
+        transaction.update(userRef, {amount: newAmount})
+        return newAmount
+      }
+
+      )
+      transaction.then(() => {
+        setError('')
+        setAmount('')
+        setEmail('')
+      }
+      ).catch(() => {
+        setError('Check credentials' && <p style={{color: "red"}}>Check credentials</p>)
+      }
+      )
+    }
+    else {
+      setError('User not found')
+    }
+
+  }
+
   
 
+  // subtract the amount sent from currentUser's amount and update the database
+  const submit2 = async (e) => {
+    e.preventDefault();
+    const user = users.find(user => user.email === currentUser?.email)
+    console.log(user)
+    
+    if (user) {
+      const transaction = runTransaction(db, async (transaction) => {
+        const userRef = doc(db, `users/${user.id}`)
+        console.log(userRef)
+        const userSnapshot = await transaction.get(userRef)
+        console.log(userSnapshot)
+        const newAmount = parseInt(userSnapshot.data().amount) - parseInt(amount)
+        console.log(newAmount)
+        // if the amount is less than 0, then the transaction is not executed
+        // error to be in red
+        if(newAmount < 0) {
+          setError('Insufficient funds'  && <p style={{color: "red"}}>Insufficient funds!</p>)
+          return
+        }
+        // if receivers email is not found, then the transaction is not executed
+        const receiver = users.find(user => user.email === email)
+        if(!receiver) {
+          setError('User not found' && <p style={{color: "red"}}>User not found!</p>)
+          return
+        }
+        // if receiver is also the current user, then the transaction is not executed
+        if(receiver.id === user.id) {
+          setError('Cannot send to yourself'  && <p style={{color: "red"}}>Cannot send to yourself</p>)
+          return
+        }
+        // if the accountNumber entered by the user is not found in the database, then the transaction is not executed
+        const accountNumberEntered = accountNumber
+        const receiverAccountNumber = receiver.accountNumber
+        if(!accountNumberEntered.includes(receiverAccountNumber)) {
+          setError('Account number not found or does not match' && <p style={{color: "red"}}>Account number not found or does not match!</p>)
+          return
+        }
+
+        transaction.update(userRef, {amount: newAmount})
+        submit(e)
+        addDoc(collection(db, "transactions" ), {
+          amountTransacted: amount,
+          fromAccountNumber: users.find(user => user.email === currentUser?.email)?.accountNumber,
+          toAccountNumber: accountNumber,
+          fromEmail: currentUser?.email,
+          toEmail: email,
+          // date and time
+          date: new Date().toLocaleString(),
+          status: "transaction on hold"
+        });
+        return newAmount
+      }
+      )
+      transaction.then(() => {
+        setError('')
+        setAmount('')
+        setEmail('')
+      }
+      ).catch(() => {
+        setError('Check credentials'  && <p style={{color: "red"}}>Check credentials!</p>)
+      }
+      )
+    }
+    else {
+      setError('User not found' && <p style={{color: "red"}}>User not found</p>)
+    }
+
+  }
+
+  const docRef = collection(db, 'transactions')
+  const [ setRows] = useState([])
+  useEffect(
+    () =>
+    onSnapshot(docRef, (snapshot) =>
+    setRows(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id})))
+    ),
+    )
+    
+
+
+
   return (
-    //   <div className='center' >
-    //     <div className='dashboard'>
-    //       <Box sx={{ display: 'flex', }}>
-
-    //   <CssBaseline />
-    //   <AppBar
-    //     position="fixed"
-    //     sx={{
-    //       width: { sm: `calc(100% - ${drawerWidth}px)` },
-    //       ml: { sm: `${drawerWidth}px` },
-    //     }}
-    //   >
-    //     <Toolbar>
-    //       <IconButton
-    //         color="inherit"
-    //         aria-label="open drawer"
-    //         edge="start"
-    //         onClick={handleDrawerToggle}
-    //         sx={{ mr: 2, display: { sm: 'none' },  }}
-    //       >
-    //         <MenuIcon />
-    //       </IconButton>
-    //       <Typography variant="h6" noWrap component="div">
-    //         Dashboard
-    //       </Typography>
-    //     </Toolbar>
-    //   </AppBar>
-    //   <Box
-    //     component="nav"
-    //     sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 },  }}
-    //     aria-label="mailbox folders"
-    //   >
-    //     {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-    //     <Drawer
-    //       container={container}
-    //       variant="temporary"
-    //       open={mobileOpen}
-    //       onClose={handleDrawerToggle}
-    //       ModalProps={{
-    //         keepMounted: true, // Better open performance on mobile.
-    //       }}
-    //       sx={{
-    //         display: { xs: 'block', sm: 'none' },
-    //         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-    //       }}
-    //     >
-    //       {drawer}
-    //     </Drawer>
-    //     <Drawer
-    //       variant="permanent"
-    //       sx={{
-    //         display: { xs: 'none', sm: 'block' },
-    //         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-    //       }}
-    //       open
-    //     >
-    //       {drawer}
-    //     </Drawer>
-    //   </Box>
-    //   <Box
-    //     component="main"
-    //     sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-    //   >
-    //     <Toolbar />
-    //     <div className='profile'>
-          
-    //       <p><strong>Email: </strong>{currentUser?.email}</p>
-    //       <p><strong>account number: </strong>{users.find(user => user.email === currentUser?.email)?.accountNumber}</p>
-    //       <p>
-    //         <strong>Email verified: </strong>
-    //         {`${currentUser?.emailVerified}`}
-    //       </p>
-          
-    //     </div>
-    //     <div className='balance'>
-    //       <h1>Balance</h1>
-    //       <h2>$ {
-    //         users.find(user => user.email === currentUser?.email)?.amount
-    //         }
-    //       </h2>
-    //     </div>
-    //     <div className='transfer'>
-          
-    //     <Button variant="contained" onClick={transfersOnHold} > Transfer</Button>
-    //     <Snackbar
-    //       open={open2}
-    //       autoHideDuration={600}
-    //       onClose={handleClose2}
-    //       message="Cannot transfer at this time"
-    //       action={action2}
-    //     />
-    //     {/*wrap transfer button with this link, import Link <Link to='/transfer'></Link> */}
-       
-    //     </div>
-    //     <div className='signout'>
-    //       <span onClick={() => signOut(auth)}>Sign Out</span>
-    //     </div>
-    //   </Box>
-    // </Box>
-
-    //     </div>
+   
        <div className= "body1">
          <input type="checkbox" id="drawer-toggle" name="drawer-toggle"/>
    <label for="drawer-toggle" id="drawer-toggle-label"></label>
-   <header>Dashboard</header>
+   <header style={{backgroundColor: "#d4cfcf"}}>Dashboard</header>
    <nav id="drawer">
       <ul>
       <div className='dash-buttons'>
             <Link to="/transfer">
         <Button variant="text"  style={{color: "white"}} > Transfer</Button></Link>
-        {/* <Snackbar
-        open={open2}
-        autoHideDuration={600}
-        onClose={handleClose2}
-        message="Cannot transfer at this time"
-        action={action2}
-      /> */}
+        
       </div>
         <div className='dash-buttons'>
           <Link to="/profile">
@@ -355,49 +267,70 @@ function Profile(props) {
       </ul>
    </nav>
    <div id="page-content">
-   
-                 <p><strong>Email: </strong>{currentUser?.email}</p>
-                 <p><strong>account number: </strong>{users.find(user => user.email === currentUser?.email)?.accountNumber}</p>
-                 <p>
-                   <strong>Email verified: </strong>
-                   {`${currentUser?.emailVerified}`}
-                 </p>
-                
-               
-               <div className='balance'>
-                 <h1>Balance</h1>
-                 <h2>$ {
-                   users.find(user => user.email === currentUser?.email)?.amount
-                   }
-                 </h2>
+
+<div className="name-balance">
+<div className='signout'>
+                 <span onClick={() => signOut(auth)}><LogoutIcon/></span> 
                </div>
-               <div className='transfer1'>
-                <Link to="/transfer">
-               <Button variant="contained" onClick={transfersOnHold} > Transfer</Button>
-               </Link>
-               {/* <Snackbar
-                 open={open2}
-                 autoHideDuration={600}
-                 onClose={handleClose2}
-                 message="Cannot transfer at this time"
-                 action={action2}
-               /> */}
-               {/*wrap transfer button with this link, import Link <Link to='/transfer'></Link> */}
-             
-               </div>
-               <div className='signout'>
-                 <span onClick={() => signOut(auth)}>Sign Out</span>
-               </div>
+<div className='balance'>
+      <p>${users.find(user => user.email === currentUser?.email)?.amount}</p>
+    </div>
+    <div className='name'>
+      <p>{users.find(user => user.email === currentUser?.email)?.fullName}</p>
+    </div>
+    
 </div>
+
+    <div className='otherinfo'>
+      <p><strong>Email: </strong>{currentUser?.email}</p>
+      <p><strong>account number: </strong>{users.find(user => user.email === currentUser?.email)?.accountNumber}</p>
+      <p>
+        <strong>Email verified: </strong>
+        {`${currentUser?.emailVerified}`}
+      </p>
+
+    </div>
+
+               
+<div className='transfer1'>
+                <h1>Transfer</h1>
+                <form onSubmit={submit2}>
+                  <label>
+                    <input type="email" 
+                    placeholder="Enter receiver's email"
+                    required  
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} />
+                  </label>
+                  <label>
+                    <input type="text"
+                    placeholder="Enter account number"
+                    required
+                    value={accountNumber}
+                    maxLength="11"
+                    minLength="11"
+                    onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ''))} />
+                  </label>
+                  <label>
+                    <input type="text"
+                    placeholder='Enter amount KSH'
+                    required 
+                    value={amount}  
+                    onChange={(e) => setAmount(e.target.value.replace(/\D/g, ''))} />
+                  </label>
+                  <input type="submit" value="Submit" />
+                </form>
+                <h1>{error}</h1>
+                </div>
+
+                
+</div>
+
       </div>
   )
 }
 
 Profile.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
 };
 

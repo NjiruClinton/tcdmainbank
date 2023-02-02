@@ -66,8 +66,7 @@ input{
       background-color: white;
       color: #2f80ed;
     }
-/* .transfer form
-*/
+
 .transfer{
   margin-left: 50px;
     width: 90%;
@@ -76,7 +75,6 @@ input{
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
 }
 
-/* small screen */
 @media screen and (max-width: 600px){
     .transfer{
       margin-left: 0px;
@@ -112,3 +110,5 @@ input{
       border-radius: 0px;
     }
 }
+
+

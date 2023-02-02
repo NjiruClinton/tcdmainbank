@@ -2,7 +2,7 @@ import React from 'react'
 import "./homecontent.css"
 import pic1 from "./pic1.jpeg"
 import pic2 from "./pic2.jpeg"
-import pic3 from "./pic3.jpeg"
+import pic3 from "../../assets/pic3.jpg"
 
 export default function Homecontent() {
   return (
@@ -18,12 +18,13 @@ export default function Homecontent() {
         <div className="card">
           <img src={pic2} alt="pic1" />
           <h1>Open a Trans National Bank account</h1><br/>
-          <p>Benefit from our services and solutions designed to meet all of your banking needs. Sign up for a TCD bank account now. </p>
+          <p>Benefit from our services and solutions designed to meet all of your banking needs. Sign up for a Trans National bank account now. </p>
         </div>
         <div className="card">
           <img src={pic3} alt="pic1" />
           <h1>Trans National Priority Banking</h1><br/>
-          <p>More delivery time options are available for your international shipments from January 3, 2022.</p>
+          <p>  <p class="text-gray-700 text-2xl">Fast transaction options are available for your international transfers from now.</p>
+</p>
         </div>
         </div>
     </div>
