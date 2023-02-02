@@ -201,19 +201,7 @@ function Transfer() {
     const rowsDisplay2 = rows.filter(row => row.toEmail === currentUser?.email)
     
 
-const [message, setMessage] = useState('')
-const submit3 = (e) => {
-  if(1 == 20){
-    submit2(e)
-  }else{
-    const displayMessage = message
-    setMessage(displayMessage)
-    e.preventDefault()
-    setMessage('Transactions are currently on hold')
-    alert('Transactions are currently on hold')
-    console.log('Transactions are currently on hold')
-  }
-}
+
 
 
 
